@@ -1,0 +1,40 @@
+# Файлы и папки виртуального окружения
+venv/
+env/
+*.pyc
+__pycache__/
+
+# Логи
+*.log
+
+# Конфигурационные файлы IDE/редактора
+.vscode/
+.idea/
+
+# Кэш и временные файлы
+*.tmp
+*.swp
+*.swo
+
+# Количество строк выводит Python Debugger
+*.pdb
+
+# Файлы окружения
+.env
+.env.*
+
+# Файлы, создаваемые Jupyter Notebook
+.ipynb_checkpoints/
+
+# Файлы связанные с тестами/отладкой
+.coverage
+.cache/
+
+# Инструменты сборки Python
+*.egg
+*.egg-info/
+dist/
+build/
+
+.DS_Store
+
