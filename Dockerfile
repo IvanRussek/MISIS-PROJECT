@@ -1,26 +1,18 @@
-FROM python:3.10-slim-bullseye
+FROM python:3.10-slim-buster 
 
 ARG SERVICE_PORT=8501
 ENV SERVICE_PORT=${SERVICE_PORT}
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    libssl-dev \
-    libffi-dev \
-    curl \
-    ca-certificates \
-    wait-for-it \
-    && rm -rf /var/lib/apt/lists/*
-
 COPY . /app
 WORKDIR /app
 
-RUN python -m pip install --upgrade pip
-RUN python -m pip install --use-deprecated=legacy-resolver -r requirements.txt
+RUN python -m pip install --upgrade pip 
+RUN python -m pip install -r requirements.txt
 
-RUN (streamlit run MISIS.py --server.port=${SERVICE_PORT} --server.address=0.0.0.0 &) && \
-    wait-for-it localhost:${SERVICE_PORT} --timeout=30 -- echo "App started successfully"
+RUN apt update && apt install -y ca-certificates curl
+
+RUN (export DRY_RUN=True; streamlit run lomonosov.py &) && sleep 5 && curl http://localhost:${SERVICE_PORT}/
 
 HEALTHCHECK CMD curl --fail http://localhost:${SERVICE_PORT}/_stcore/health
 
-ENTRYPOINT ["streamlit", "run", "MISIS.py", "--server.port=${SERVICE_PORT}", "--server.address=0.0.0.0"]
+ENTRYPOINT streamlit run lomonosov.py --server.port=${SERVICE_PORT} --server.address=0.0.0.0
