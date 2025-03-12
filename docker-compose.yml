@@ -9,5 +9,3 @@ services:
       - .env-prod  
     ports:
       - "8501:8501" 
-    environment:
-      SERVICE_PORT: ${SERVICE_PORT}  
