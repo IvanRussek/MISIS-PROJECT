@@ -5,7 +5,9 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: ecstatic_mclaren
-    environment:
-      PORT: 8501
+    env_file:
+      - .env-prod  
     ports:
-      - "8501:8501"
+      - "8501:8501" 
+    environment:
+      SERVICE_PORT: ${SERVICE_PORT}  
