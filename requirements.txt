@@ -2,9 +2,9 @@ requests
 streamlit==1.33.0
 pandas==1.5.3
 gigachain
-langchain>=0.2.11
-langchain-community>=0.0.34
-langchain-core>=0.2.23
++ langchain>=0.2.11  
++ langchain-community>=0.0.35  
++ langchain-core>=0.2.23  
 PyPDF2==3.0.1
 python-dotenv==1.0.1
 scikit_learn==1.4.2
