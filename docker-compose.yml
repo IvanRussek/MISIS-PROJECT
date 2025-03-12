@@ -1,4 +1,3 @@
-version: '3'
 services:
   lomonosov_streamlit:
     restart: unless-stopped
