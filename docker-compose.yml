@@ -1,11 +1,32 @@
+version: '3.8'
+
 services:
-  lomonosov_streamlit:
-    restart: unless-stopped
+  misis-app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: lomonosov-streamlit
-    env_file:
-      - .env-prod
     ports:
-      - 8501:8501
+      - "8501:8501"
+      - "2222:22"
+    environment:
+      - AUTH_DATA=${AUTH_DATA}
+      - MODEL=${MODEL:-GigaChat-Pro-preview}
+      - SCOPE=${SCOPE:-GIGACHAT_API_CORP}
+      - TEMPERATURE=${TEMPERATURE:-0.1}
+      - TIMEOUT=${TIMEOUT:-600}
+      - CYBERLENINKA_SIZE=${CYBERLENINKA_SIZE:-30}
+      - TOP_K_PAPERS=${TOP_K_PAPERS:-3}
+      - SERVICE_PORT=8501
+    volumes:
+      - ./resources:/app/resources
+    restart: unless-stopped
+    command: >
+      bash -c "
+        echo 'Checking environment variables...' &&
+        if [ -z \"$$AUTH_DATA\" ]; then
+          echo 'ERROR: AUTH_DATA is not set' &&
+          exit 1;
+        fi &&
+        service ssh start &&
+        streamlit run MISIS.py --server.port=8501 --server.address=0.0.0.0
+      "
